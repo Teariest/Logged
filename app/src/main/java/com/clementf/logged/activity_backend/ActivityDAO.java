@@ -27,4 +27,7 @@ public interface ActivityDAO {
     // TODO: 'order' might be wrong but I think the quotations are to signify order is a name not a command
     @Query("SELECT * FROM activity_table ORDER BY `order` DESC")
     LiveData<List<ActivityEntity>> getAllActivities();
+
+    @Query("SELECT *, :ID FROM activity_table")
+    LiveData<ActivityEntity> getActivity(int ID);
 }

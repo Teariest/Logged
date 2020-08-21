@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +57,9 @@ public class ActivitySelectorFragment extends Fragment {
         ActivityAdapter adapter = new ActivityAdapter();
         recyclerView.setAdapter(adapter);
 
-        // Setup ActivityViewModel
+        // Setup ActivityViewModel NOTE: we pass in getActivity to viewModelProvider bc we want to use Activity Lifecycle
         viewModel = new ViewModelProvider(getActivity()).get(ActivitySelectorViewModel.class);
+        // here we use getViewLifecycleOwner to avoid getting redundant calls when fragment view lifecycle gets re-built
         viewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<ActivityEntity>>() {
             @Override
             public void onChanged(List<ActivityEntity> activityEntities) {
@@ -86,24 +86,26 @@ public class ActivitySelectorFragment extends Fragment {
         // setup the views of the viewholder so they display the appropriate values
         @Override
         public void onBindViewHolder(@NonNull ActivityHolder holder, int position) {
-            Log.d(TAG, "onBindViewHolder: position:" + position);
             ActivityEntity currentActivity = activities.get(position);
+
             holder.parent.setCardBackgroundColor(currentActivity.getColor());
             holder.iconImageView.setImageResource(currentActivity.getIcon());
             holder.titleTextView.setText(currentActivity.getTitle());
             holder.descriptionTextView.setText(currentActivity.getDescription());
+            // onclick listener to log time
             holder.parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     viewModel.insert(new TimeLogEntity(Calendar.getInstance().getTime(), currentActivity.getId(), TimeZone.getDefault().getRawOffset()));
                 }
             });
+            // onclick listener to goto EditActivityFragment
             holder.editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    EditActivityFragment editActivityFragment = EditActivityFragment.newInstance();
-                    editActivityFragment.show(fragmentManager, null);
+                    ActivityEditorFragment activityEditorFragment = ActivityEditorFragment.newInstance(currentActivity.getId());
+                    activityEditorFragment.show(fragmentManager, null);
                 }
             });
         }

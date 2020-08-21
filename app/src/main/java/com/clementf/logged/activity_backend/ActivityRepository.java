@@ -44,6 +44,10 @@ public class ActivityRepository {
         return activities;
     }
 
+    public LiveData<ActivityEntity> getActivity(int ID) {
+        return activityDao.getActivity(ID);
+    }
+
     // TODO: as this is deprecated, we should move to the current meta although not that important bc this is for testing
     public static class ActivityDBAsyncQuery extends AsyncTask<ActivityEntity, Void, Void> {
 

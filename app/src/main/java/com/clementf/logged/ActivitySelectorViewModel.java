@@ -30,9 +30,8 @@ public class ActivitySelectorViewModel extends AndroidViewModel {
     private ActivityRepository activityRepository;
     private LiveData<List<ActivityEntity>> activities;
 
-
-    public void insert(ActivityEntity activity) {
-        activityRepository.insert(activity);
+    /* Not part of ActivitySelectorFragment requirements
+    public void insert(ActivityEntity activity) {  activityRepository.insert(activity);
     }
 
     public void update(ActivityEntity activity) {
@@ -42,6 +41,7 @@ public class ActivitySelectorViewModel extends AndroidViewModel {
     public void delete(ActivityEntity activity) {
         activityRepository.delete(activity);
     }
+    */
 
     public LiveData<List<ActivityEntity>> getAllActivities() {
         return activityRepository.getAllActivities();
@@ -60,6 +60,7 @@ public class ActivitySelectorViewModel extends AndroidViewModel {
         timeLogRepository.update(timeLog);
     }
 
+    /* Not part of ActivitySelectorFragment requirements
     public void delete(TimeLogEntity timeLog) {
         timeLogRepository.delete(timeLog);
     }
@@ -67,6 +68,6 @@ public class ActivitySelectorViewModel extends AndroidViewModel {
     public LiveData<List<TimeLogEntity>> getAllTimeLogs() {
         return timeLogRepository.getAllTimeLogs();
     }
-
+    */
 
 }
