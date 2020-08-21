@@ -33,7 +33,7 @@
             android:paddingBottom="8dp"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/activity_item_editbutton"
             app:layout_constraintStart_toEndOf="@+id/activity_item_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,12 +45,12 @@
             android:maxLines="1"
             android:text="Description"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/activity_item_editbutton"
             app:layout_constraintStart_toEndOf="@+id/activity_item_image"
             app:layout_constraintTop_toBottomOf="@+id/activity_item_title" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/activity_item_editbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_edit_24"

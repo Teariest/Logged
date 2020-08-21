@@ -32,15 +32,17 @@ public abstract class ActivityDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+            new PopulateDBAsyncTask(instance).execute();
         }
     };
 
+    // TODO: as this is deprecated, we should move to the current meta
     private static class PopulateDBAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ActivityDAO activityDAO;
 
-        public PopulateDBAsyncTask(ActivityDAO activityDAO) {
-            this.activityDAO = activityDAO;
+        public PopulateDBAsyncTask(ActivityDatabase activityDB) {
+            activityDAO = activityDB.activityDao();
         }
 
         @Override

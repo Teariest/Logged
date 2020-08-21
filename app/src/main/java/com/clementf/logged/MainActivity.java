@@ -1,6 +1,7 @@
 package com.clementf.logged;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,8 @@ import com.clementf.logged.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,18 +32,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+            TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager2 viewPager  = findViewById(R.id.view_pager);
 
         // add fragments to tabLayoutAdapter & add adapter to viewPager
         TabLayoutAdapter tabLayoutAdapter = new TabLayoutAdapter(this);
-        tabLayoutAdapter.createFragment(0);
-        tabLayoutAdapter.createFragment(1);
+        tabLayoutAdapter.addFragment(new ActivitySelectorFragment());
+        tabLayoutAdapter.addFragment(new DataDisplayFragment());
         viewPager.setAdapter(tabLayoutAdapter);
 
         // add mediator that links tabLayout and ViewPager2
         new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText("Tab " + (position + 1))
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                        switch (position) {
+                            case 0: tab.setText("Activities");
+                                break;
+                            case 1: tab.setText("Data");
+                                break;
+                            default: throw new IllegalArgumentException("Tab at position:" + position + " is not configured in OnConfigureTab.");
+                        }
+                    }
+                }
         ).attach();
 
     }
@@ -48,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     // TabLayoutAdapter to adapt fragment into ViewPager2
     private class TabLayoutAdapter extends FragmentStateAdapter {
 
-        private int itemCount = 0;
+        private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 
         public TabLayoutAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
@@ -57,21 +71,14 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            Fragment fragment;
-            switch (position) {
-                case 0: fragment = ActivitySelectorFragment.newInstance();
-                    break;
-                case 1: fragment = DataDisplayFragment.newInstance();
-                    break;
-                default: throw new IllegalArgumentException("TabLayoutAdapter: createFragment(int position): incorrect position");
-            }
-            itemCount++;
-            return fragment;
+            return fragments.get(position);
         }
 
         @Override
         public int getItemCount() {
-            return itemCount;
+            return fragments.size();
         }
+
+        public void addFragment(Fragment fragment) { fragments.add(fragment); }
     }
 }
