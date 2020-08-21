@@ -1,4 +1,4 @@
-package com.clementf.logged;
+package com.clementf.logged.activity_backend;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -32,11 +32,11 @@ public abstract class ActivityDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new PopulateDBAsyncTask(instance).execute();
+            //new PopulateDBAsyncTask(instance).execute();
         }
     };
 
-    // TODO: as this is deprecated, we should move to the current meta
+    // TODO: as this is deprecated, we should move to the current meta although not that important bc this is for testing
     private static class PopulateDBAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ActivityDAO activityDAO;

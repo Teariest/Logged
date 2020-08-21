@@ -1,4 +1,6 @@
-package com.clementf.logged;
+package com.clementf.logged.activity_backend;
+
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,6 +9,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.nio.channels.AsynchronousChannelGroup;
 import java.util.List;
 
 @Dao

@@ -1,8 +1,10 @@
-package com.clementf.logged;
+package com.clementf.logged.activity_backend;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Date;
 
 @Entity(tableName = "activity_table")
 public class ActivityEntity {
@@ -35,6 +37,8 @@ public class ActivityEntity {
     */
 
     public int getId() {
+
+
         return id;
     }
 

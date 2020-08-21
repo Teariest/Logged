@@ -1,7 +1,5 @@
 package com.clementf.logged;
 
-import android.app.Activity;
-import android.app.Application;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +8,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,14 +20,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.clementf.logged.R;
+import com.clementf.logged.activity_backend.ActivityEntity;
+import com.clementf.logged.timelog_backend.TimeLogEntity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ActivitySelectorFragment extends Fragment {
 
-    private ActivityViewModel activityViewModel;
+    private ActivitySelectorViewModel viewModel;
 
     public ActivitySelectorFragment() {
         // Required empty public constructor
@@ -58,9 +58,9 @@ public class ActivitySelectorFragment extends Fragment {
         ActivityAdapter adapter = new ActivityAdapter();
         recyclerView.setAdapter(adapter);
 
-        // setup view model
-        activityViewModel = new ViewModelProvider(getActivity()).get(ActivityViewModel.class);
-        activityViewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<ActivityEntity>>() {
+        // Setup ActivityViewModel
+        viewModel = new ViewModelProvider(getActivity()).get(ActivitySelectorViewModel.class);
+        viewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<ActivityEntity>>() {
             @Override
             public void onChanged(List<ActivityEntity> activityEntities) {
                 adapter.setActivities(activityEntities);
@@ -83,15 +83,21 @@ public class ActivitySelectorFragment extends Fragment {
             return new ActivityHolder(itemView);
         }
 
+        // setup the views of the viewholder so they display the appropriate values
         @Override
         public void onBindViewHolder(@NonNull ActivityHolder holder, int position) {
             Log.d(TAG, "onBindViewHolder: position:" + position);
             ActivityEntity currentActivity = activities.get(position);
-
             holder.parent.setCardBackgroundColor(currentActivity.getColor());
             holder.iconImageView.setImageResource(currentActivity.getIcon());
             holder.titleTextView.setText(currentActivity.getTitle());
             holder.descriptionTextView.setText(currentActivity.getDescription());
+            holder.parent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewModel.insert(new TimeLogEntity(Calendar.getInstance().getTime(), currentActivity.getId(), TimeZone.getDefault().getRawOffset()));
+                }
+            });
             holder.editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
