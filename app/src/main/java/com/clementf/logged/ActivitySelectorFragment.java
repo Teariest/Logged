@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.clementf.logged.activity_backend.ActivityEntity;
 import com.clementf.logged.timelog_backend.TimeLogEntity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,6 +65,16 @@ public class ActivitySelectorFragment extends Fragment {
             @Override
             public void onChanged(List<ActivityEntity> activityEntities) {
                 adapter.setActivities(activityEntities);
+            }
+        });
+
+        FloatingActionButton fab = getView().findViewById(R.id.activity_selector_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                ActivityCreatorFragment activityCreatorFragment = ActivityCreatorFragment.newInstance();
+                activityCreatorFragment.show(fragmentManager, null);
             }
         });
     }

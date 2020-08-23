@@ -6,4 +6,24 @@
     <string name="settings_menu_title">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Activity Editor layout strings -->
+
+    <string name="activity_editor_layout_title">Edit</string>
+    <string name="activity_editor_title">Title:</string>
+    <string name="activity_editor_description">Description:</string>
+    <string name="activity_editor_icon">Icon:</string>
+    <string name="activity_editor_icon_button">Change Icon</string>
+    <string name="activity_editor_color">Color:</string>
+    <string name="activity_editor_color_button">Change Color</string>
+    <string name="activity_editor_save">Save</string>
+
+    <!-- Activity Creator presets -->
+
+    <string name="activity_creator_layout_title">Create new Activity:</string>
+    <string name="activity_creator_default_title">What is the activity\'s name</string>
+    <string name="activity_creator_default_description">What is the activity about?</string>
+    <string name="activity_creator_create">Create</string>
+
+
 </resources>

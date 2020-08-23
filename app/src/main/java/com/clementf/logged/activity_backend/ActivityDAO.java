@@ -3,6 +3,7 @@ package com.clementf.logged.activity_backend;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -25,7 +26,7 @@ public interface ActivityDAO {
     void delete(ActivityEntity activityEntity);
 
     // TODO: 'order' might be wrong but I think the quotations are to signify order is a name not a command
-    @Query("SELECT * FROM activity_table ORDER BY `order` DESC")
+    @Query("SELECT * FROM activity_table ORDER BY activity DESC")
     LiveData<List<ActivityEntity>> getAllActivities();
 
     @Query("SELECT *, :ID FROM activity_table")

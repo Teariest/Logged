@@ -38,6 +38,6 @@ public class DataDisplayViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<TimeLogEntity>> getAllTimeLogs() {
-        return timeLogRepository.getAllTimeLogs();
+        return timeLogs;
     }
 }
