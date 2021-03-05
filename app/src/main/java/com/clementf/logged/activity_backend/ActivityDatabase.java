@@ -19,7 +19,9 @@ public abstract class ActivityDatabase extends RoomDatabase {
     public abstract ActivityDAO activityDao();
 
     public static synchronized ActivityDatabase getInstance(Context context) {
+
         //context.deleteDatabase("activity_database"); // when you have to delete database for testing
+
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), ActivityDatabase.class, "activity_database")
                     .fallbackToDestructiveMigration()

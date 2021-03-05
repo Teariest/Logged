@@ -25,10 +25,9 @@ public interface ActivityDAO {
     @Delete
     void delete(ActivityEntity activityEntity);
 
-    // TODO: 'order' might be wrong but I think the quotations are to signify order is a name not a command
-    @Query("SELECT * FROM activity_table ORDER BY activity DESC")
+    @Query("SELECT * FROM activity_table ORDER BY id ASC")
     LiveData<List<ActivityEntity>> getAllActivities();
 
-    @Query("SELECT *, :ID FROM activity_table")
+    @Query("SELECT * FROM activity_table WHERE id = :ID")
     LiveData<ActivityEntity> getActivity(int ID);
 }

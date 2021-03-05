@@ -22,6 +22,7 @@ public abstract class TimeLogDatabase extends RoomDatabase {
     public abstract TimeLogDAO timeLogDAO();
 
     public static synchronized TimeLogDatabase getInstance(Context context) {
+
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), TimeLogDatabase.class, "timelog_database")
             .fallbackToDestructiveMigration()

@@ -28,4 +28,10 @@ public interface TimeLogDAO {
 
     @Query("SELECT * FROM timelog_table ORDER BY timelog ASC")
     LiveData<List<TimeLogEntity>> getAllTimeLogs();
+
+    @Query("SELECT * FROM timelog_table WHERE timelog >= :earliestTime ORDER BY timelog ASC")
+    LiveData<List<TimeLogEntity>> getTimeLogsSince(long earliestTime);
+
+    @Query("SELECT COUNT(*)")
+    int getNumOfTimeLogs();
 }

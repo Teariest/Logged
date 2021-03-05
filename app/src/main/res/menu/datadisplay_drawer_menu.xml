@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/graph_type_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/graph_type_subtitle"
+            android:title="@string/graph_type_subtitle">
+            <menu>
+                <item android:id="@+id/graph_type_pie"
+                    android:title="Pie Chart"
+                    android:checkable="true"
+                    android:state_checked="true"
+                    android:color="@color/colorAccent"/>
+                <item android:id="@+id/graph_type_line"
+                    android:title="Line Graph"
+                    android:checkable="true"/>
+                <item android:id="@+id/graph_type_calendar"
+                    android:title="Calendar View"
+                    android:checkable="true"/>
+            </menu>
+        </item>
+    </group>
+    <group
+        android:id="@+id/time_filter_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/time_filter_subtitle"
+            android:title="@string/time_filter">
+            <menu>
+                <item android:id="@+id/time_filter_day"
+                    android:title="@string/time_filter_day"
+                    android:checkable="true"
+                    android:state_checked="true"
+                    android:color="@color/colorAccent"/>
+                <item android:id="@+id/time_filter_week"
+                    android:title="@string/time_filter_week"
+                    android:checkable="true"/>
+                <item android:id="@+id/time_filter_month"
+                    android:title="@string/time_filter_month"
+                    android:checkable="true"/>
+                <item android:id="@+id/time_filter_year"
+                    android:title="@string/time_filter_year"
+                    android:checkable="true"/>
+                <item android:id="@+id/time_filter_all"
+                    android:title="@string/time_filter_all"
+                    android:checkable="true"/>
+            </menu>
+        </item>
+    </group>
+</menu>

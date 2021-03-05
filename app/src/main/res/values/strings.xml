@@ -9,7 +9,7 @@
 
     <!-- Activity Editor layout strings -->
 
-    <string name="activity_editor_layout_title">Edit</string>
+    <string name="activity_editor_layout_title">Edit Activity</string>
     <string name="activity_editor_title">Title:</string>
     <string name="activity_editor_description">Description:</string>
     <string name="activity_editor_icon">Icon:</string>
@@ -24,6 +24,16 @@
     <string name="activity_creator_default_title">What is the activity\'s name</string>
     <string name="activity_creator_default_description">What is the activity about?</string>
     <string name="activity_creator_create">Create</string>
+
+    <!-- Data Display Menu Strings -->
+    <string name="time_filter">Time Range</string>
+    <string name="time_filter_day">Day</string>
+    <string name="time_filter_week">Week</string>
+    <string name="time_filter_month">Month</string>
+    <string name="time_filter_year">Year</string>
+    <string name="time_filter_all">All</string>
+    <string name="time_to_date">Time to Date</string>
+    <string name="graph_type_subtitle">Graph Type:</string>
 
 
 </resources>

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TimeLogRepository {
 
@@ -41,6 +42,39 @@ public class TimeLogRepository {
     }
 
     public LiveData<List<TimeLogEntity>> getAllTimeLogs() { return timeLogs; }
+
+    public LiveData<List<TimeLogEntity>> getTimeLogsSince(long earliestTime) {
+
+        // I hope this works but it could take a long time, idk
+        return timeLogDAO.getTimeLogsSince(earliestTime);
+    }
+
+    // No idea why I made this but I'm keeping it till getTimeLogsSince(long) works
+    // TODO: as this is deprecated, we should move to the current meta although not that important bc this is for testing
+    public static class TimeLogDBAsyncFetchQuery extends AsyncTask<Long, Void, LiveData<List<TimeLogEntity>>> {
+
+        private TimeLogDAO dao;
+
+        private TimeLogDBAsyncFetchQuery(TimeLogDAO dao) {
+
+            this.dao = dao;
+        }
+
+        @Override
+        protected LiveData<List<TimeLogEntity>> doInBackground(Long... longs) {
+
+            if (longs[0] < 0) {
+                throw new IllegalArgumentException("ActivityDBAsyncQuery provided with illegal earliestTime");
+            }
+
+            return dao.getTimeLogsSince(longs[0]);
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<TimeLogEntity>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
+    }
 
     // TODO: as this is deprecated, we should move to the current meta although not that important bc this is for testing
     public static class TimeLogDBAsyncQuery extends AsyncTask<TimeLogEntity, Void, Void> {

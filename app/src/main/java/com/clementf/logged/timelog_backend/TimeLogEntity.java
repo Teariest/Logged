@@ -14,19 +14,20 @@ public class TimeLogEntity {
     @PrimaryKey
     @ColumnInfo(name = "timelog")
     private long startTime;
-    private int activityID;
     private int timeZoneOffset;
+    private int activityID;
 
-    public TimeLogEntity(Date startTime, int activityID, int timeZoneOffset) {
+    public TimeLogEntity(Date startTime, int timeZoneOffset, int activityID) {
         this.startTime = startTime.getTime();
-        this.activityID = activityID;
         this.timeZoneOffset = timeZoneOffset;
+        this.activityID = activityID;
+
     }
 
-    public TimeLogEntity(long startTime, int activityID, int timeZoneOffset) {
+    public TimeLogEntity(long startTime, int timeZoneOffset, int activityID) {
         this.startTime = startTime;
-        this.activityID = activityID;
         this.timeZoneOffset = timeZoneOffset;
+        this.activityID = activityID;
     }
 
     public Date getStartTimeAsDate() {
@@ -37,9 +38,10 @@ public class TimeLogEntity {
         return startTime;
     }
 
+    public int getTimeZoneOffset() { return timeZoneOffset; }
+
     public int getActivityID() {
         return activityID;
     }
 
-    public int getTimeZoneOffset() { return timeZoneOffset; }
 }

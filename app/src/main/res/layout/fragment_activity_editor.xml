@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityEditorFragment"
+    tools:context=".activity_editing.ActivityEditorFragment"
     android:padding="16dp">
 
     <TextView
@@ -66,7 +66,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/edit_fragment_fragment_title"
+        app:layout_constraintStart_toEndOf="@+id/edit_fragment_description_textView"
         app:layout_constraintTop_toBottomOf="@+id/edit_fragment_title_editText" />
 
     <TextView
@@ -84,23 +84,25 @@
 
     <ImageView
         android:id="@+id/edit_fragment_icon_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:src="@drawable/ic_baseline_edit_24"
+        app:tint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/edit_fragment_icon_button"
         app:layout_constraintStart_toEndOf="@+id/edit_fragment_icon_textView"
         app:layout_constraintTop_toTopOf="@+id/edit_fragment_icon_button" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_fragment_icon_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/activity_editor_icon_button"
         app:icon="@drawable/ic_baseline_edit_24"
         app:iconGravity="start"
+        app:layout_constraintEnd_toEndOf="@+id/edit_fragment_color_button"
         app:layout_constraintStart_toEndOf="@+id/edit_fragment_icon_imageView"
         app:layout_constraintTop_toBottomOf="@+id/edit_fragment_description_editText" />
 
@@ -119,10 +121,11 @@
 
     <ImageView
         android:id="@+id/edit_fragment_color_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:src="@drawable/ic_baseline_circle_24"
+        app:tint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/edit_fragment_color_button"
         app:layout_constraintStart_toEndOf="@+id/edit_fragment_color_textView"
         app:layout_constraintTop_toTopOf="@+id/edit_fragment_color_button" />

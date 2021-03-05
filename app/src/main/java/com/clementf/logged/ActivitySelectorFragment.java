@@ -5,13 +5,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.clementf.logged.activity_backend.ActivityEntity;
+import com.clementf.logged.activity_backend.ActivityViewModel;
+import com.clementf.logged.activity_editing.ActivityEditorFragment;
 import com.clementf.logged.timelog_backend.TimeLogEntity;
+import com.clementf.logged.timelog_backend.TimeLogViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,7 +36,8 @@ import java.util.TimeZone;
 
 public class ActivitySelectorFragment extends Fragment {
 
-    private ActivitySelectorViewModel viewModel;
+    private ActivityViewModel activityViewModel;
+    private TimeLogViewModel timeLogViewModel;
 
     public ActivitySelectorFragment() {
         // Required empty public constructor
@@ -59,9 +66,11 @@ public class ActivitySelectorFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // Setup ActivityViewModel NOTE: we pass in getActivity to viewModelProvider bc we want to use Activity Lifecycle
-        viewModel = new ViewModelProvider(getActivity()).get(ActivitySelectorViewModel.class);
+        activityViewModel = new ViewModelProvider(getActivity()).get(ActivityViewModel.class);
+        timeLogViewModel = new ViewModelProvider(getActivity()).get(TimeLogViewModel.class);
+
         // here we use getViewLifecycleOwner to avoid getting redundant calls when fragment view lifecycle gets re-built
-        viewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<ActivityEntity>>() {
+        activityViewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<ActivityEntity>>() {
             @Override
             public void onChanged(List<ActivityEntity> activityEntities) {
                 adapter.setActivities(activityEntities);
@@ -73,7 +82,7 @@ public class ActivitySelectorFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                ActivityCreatorFragment activityCreatorFragment = ActivityCreatorFragment.newInstance();
+                ActivityEditorFragment activityCreatorFragment = ActivityEditorFragment.newInstance(-1);
                 activityCreatorFragment.show(fragmentManager, null);
             }
         });
@@ -99,15 +108,15 @@ public class ActivitySelectorFragment extends Fragment {
         public void onBindViewHolder(@NonNull ActivityHolder holder, int position) {
             ActivityEntity currentActivity = activities.get(position);
 
-            holder.parent.setCardBackgroundColor(currentActivity.getColor());
-            holder.iconImageView.setImageResource(currentActivity.getIcon());
-            holder.titleTextView.setText(currentActivity.getTitle());
+            holder.parent.setCardBackgroundColor(ResourcesCompat.getColor(getResources(), currentActivity.getColorResource(), null));
+            holder.iconImageView.setImageResource(currentActivity.getIconResource());
+            holder.titleTextView.setText(currentActivity.getName());
             holder.descriptionTextView.setText(currentActivity.getDescription());
             // onclick listener to log time
             holder.parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    viewModel.insert(new TimeLogEntity(Calendar.getInstance().getTime(), currentActivity.getId(), TimeZone.getDefault().getRawOffset()));
+                    timeLogViewModel.insert(new TimeLogEntity(Calendar.getInstance().getTime(), TimeZone.getDefault().getRawOffset(), currentActivity.getId()));
                 }
             });
             // onclick listener to goto EditActivityFragment
